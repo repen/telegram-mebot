@@ -22,6 +22,9 @@ from mebot.telegram import main as mebot, BaseCoordinator
 
 Сюда вставить ваш телеграм токен `TOKEN = os.getenv("TOKEN", "This YOU TOKEN")`
 
+Остановить работу Бота необходимо нажать сочетание клавиш ```Ctrl + C```.
+
+Полный ответ от телеграмма находится в атрибуте класса `self.tg_object`.
 
 ### Пример 1
 
@@ -106,6 +109,4 @@ if __name__ == '__main__':
 
 ```
 
-
-Полный ответ от телеграмма находится в атрибуте класса `self.tg_object`.
 
