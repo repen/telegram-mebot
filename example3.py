@@ -19,6 +19,7 @@ db = shelve.open( "application.ns" )
 
 class AppStorage:
 
+    CR = 0
     cache = {}
 
     def __init__(self, *args, **kwargs):
@@ -37,6 +38,11 @@ class AppStorage:
         # return self.db[self._id]
 
     def dump_storage(self, data):
+
+        # if AppStorage.CR % 10000 == 0:
+        #     '''Уменьшить пространство'''
+        #     self.db.__dict__["dict"].reorganize()
+
         self.db[self._id] = data
         AppStorage.cache[self._id] = data
 
