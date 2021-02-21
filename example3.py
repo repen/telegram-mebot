@@ -69,14 +69,14 @@ class Command( BaseCoordinator, AppStorage ):
 
 
     def _counter(self):
-        '''команда счетчик, при запуске увеличивает значение на 1'''
+        '''/counter команда счетчик, при запуске увеличивает значение на 1'''
         print(self.dict)
         if not self.getitem("i"):
             self.dict["i"] = 0
 
         result = self.dict["i"]
         self.dict["i"] += 1
-        # self.dump_storage(self.dict)
+        self.dump_storage(self.dict)
         return 'Count: {}'.format( result )
 
 
