@@ -16,3 +16,4 @@ joubot/Log/main.log
 dist
 *.egg-info
 build
+application.ns
