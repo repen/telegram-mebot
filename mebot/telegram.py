@@ -59,11 +59,12 @@ def queue_service(*args, **kwargs):
 
 class Telegram:
 
-    def __init__(self, token):
+    def __init__(self, token, **kwargs):
         self.token     = token
         self.update_id = None
         self.api_url   = "https://api.telegram.org/bot{}/".format(self.token)
         self.timeout   = 10
+        self.callback_delete = kwargs.setdefault("callback_delete", [])
 
     def get_updates(self):
         while True:
@@ -99,7 +100,13 @@ class Telegram:
             log.info("Error connect %s. reconnect", Er)
             time.sleep(5)
 
+    def __del__(self):
+        print("__del__")
+        for e, _ in enumerate( self.callback_delete ):
+            self.callback_delete[e] = self.callback_delete[e]()
+        print(self.callback_delete)
 
+        
     def _echo(self):
 
         for _ in count():
@@ -139,6 +146,7 @@ def main(*args, **kwargs):
     
     TOKEN = kwargs.setdefault("token", None)
     Coordinator = kwargs.setdefault("coordinator", None)
+    callback_delete = kwargs.setdefault("callback_delete", [])
     
     if not TOKEN :
         raise ValueError("Please Set Telegram TOKEN = (https://romua1d.ru/kak-poluchit-token-bota-telegram-api/) ")
@@ -148,7 +156,7 @@ def main(*args, **kwargs):
 
     
     Thread(target=queue_service, args=(Coordinator,), daemon=True).start()
-    bot = Telegram(TOKEN)
+    bot = Telegram(TOKEN, callback_delete=callback_delete)
     bot.main()
 
 if __name__ == '__main__':
